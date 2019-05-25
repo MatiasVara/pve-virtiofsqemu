@@ -1,0 +1,36 @@
+From c3f937b86352570cfc2d7c61415ef04548399c67 Mon Sep 17 00:00:00 2001
+From: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Date: Tue, 25 Sep 2018 10:15:06 +0200
+Subject: [PATCH 29/29] monitor: guard iothread access by mon->use_io_thread
+
+monitor_resume() and monitor_suspend() both want to
+"kick" the I/O thread if it is there, but in
+monitor_suspend() lacked the use_io_thread flag condition.
+This is required when we later only spawn the thread on
+first use.
+
+Signed-off-by: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20180925081507.11873-2-w.bumiller@proxmox.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ monitor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/monitor.c b/monitor.c
+index 4807bbe..7a3e219 100644
+--- a/monitor.c
++++ b/monitor.c
+@@ -4328,7 +4328,7 @@ int monitor_suspend(Monitor *mon)
+ 
+     atomic_inc(&mon->suspend_cnt);
+ 
+-    if (mon->use_io_thread) {
++    if (mon->use_io_thread && mon->use_io_thread) {
+         /*
+          * Kick I/O thread to make sure this takes effect.  It'll be
+          * evaluated again in prepare() of the watch object.
+-- 
+2.7.4
+

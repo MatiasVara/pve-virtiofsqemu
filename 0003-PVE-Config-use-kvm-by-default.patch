@@ -1,0 +1,32 @@
+From 2641a1885b2a81e1539124be8778d1f61e2712ef Mon Sep 17 00:00:00 2001
+From: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Date: Wed, 9 Dec 2015 14:27:05 +0100
+Subject: [PATCH 03/29] PVE: [Config] use kvm by default
+
+---
+ accel/accel.c | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/accel/accel.c b/accel/accel.c
+index 454fef9..eb3bd51 100644
+--- a/accel/accel.c
++++ b/accel/accel.c
+@@ -88,15 +88,7 @@ void configure_accelerator(MachineState *ms, const char *progname)
+             /* If the program name ends with "kvm", we prefer KVM */
+             accel = "kvm:tcg";
+         } else {
+-#if defined(CONFIG_TCG)
+-            accel = "tcg";
+-#elif defined(CONFIG_KVM)
+             accel = "kvm";
+-#else
+-            error_report("No accelerator selected and"
+-                         " no default accelerator available");
+-            exit(1);
+-#endif
+         }
+     }
+ 
+-- 
+2.7.4
+
