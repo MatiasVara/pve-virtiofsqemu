@@ -7,12 +7,19 @@ This repository contains the patches to enable virtiofs qemu to work in Promox. 
 You need to follow the instructions in https://virtio-fs.gitlab.io/howto-qemu.html at section **Building QEMU**. Before to compile, you need to apply the patches by using **git am**. You need to first apply the **pve** patches and then the **extra*s** patches. The configure should look like:
 
 `../configure --prefix=$PWD --target-list=x86_64-softmmu --disable-xen --enable-gnutls \`
+
 `--enable-linux-aio --enable-sdl --enable-rbd --enable-libiscsi \`
+
 `--disable-smartcard --audio-drv-list="alsa" \`
+
 `--enable-usb-redir --enable-glusterfs --enable-libusb --disable-gtk \`
+
 `--enable-xfsctl --enable-numa --disable-strip --enable-jemalloc \`
+
 `--disable-libnfs \`
+
 `--disable-capstone \`
+
 `--disable-guest-agent --disable-guest-agent-msi`
 
-Note that the compilation may requiere the installation of dependecies. The resulting binary can be used in a Proxmox host by replacing the qemu installed at **/usr/bin**. I think it may be another way to install it but I did not find it.
+Note that the compilation may requiere the installation of dependecies. The resulting binary can be used in a Proxmox host by replacing the QEMU installed at **/usr/bin**. I think it may be another way to install it but I did not find it.
