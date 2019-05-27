@@ -23,3 +23,7 @@ You need to follow the instructions in https://virtio-fs.gitlab.io/howto-qemu.ht
 `--disable-guest-agent --disable-guest-agent-msi`
 
 Note that the compilation may requiere the installation of dependecies. The resulting binary can be used in a Proxmox host by replacing the QEMU installed at **/usr/bin**. I think it may be another way to install it but I did not find it.
+
+# Note
+
+The patch **0003-PVE-Config-use-kvm-by-default.patch** should be removed. 
